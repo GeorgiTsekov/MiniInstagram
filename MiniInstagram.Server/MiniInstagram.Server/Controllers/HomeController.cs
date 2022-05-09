@@ -3,12 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MiniInstagram.Server.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class HomeController : ControllerBase
+    public class HomeController : ApiController
     {
-        // [Authorize]
-        public IActionResult Get()
+        [Authorize]
+        public ActionResult Get()
         {
             return Ok("Works");
         }
