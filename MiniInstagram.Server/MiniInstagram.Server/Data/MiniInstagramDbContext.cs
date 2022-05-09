@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MiniInstagram.Server.Data.Models;
 
 namespace MiniInstagram.Server.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class MiniInstagramDbContext : IdentityDbContext<User>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public MiniInstagramDbContext(DbContextOptions<MiniInstagramDbContext> options)
             : base(options)
         {
         }

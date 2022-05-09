@@ -1,16 +1,17 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MiniInstagram.Server.Data;
+using MiniInstagram.Server.Data.Models;
 
 var builder = WebApplication.CreateBuilder(args);
     
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<MiniInstagramDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<MiniInstagramDbContext>();
 builder.Services.AddControllers();
 
 var app = builder.Build();
