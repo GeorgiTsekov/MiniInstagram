@@ -185,7 +185,7 @@ namespace MiniInstagram.Server.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Game");
+                    b.ToTable("Games");
                 });
 
             modelBuilder.Entity("MiniInstagram.Server.Data.Models.User", b =>

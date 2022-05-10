@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using MiniInstagram.Server;
 using MiniInstagram.Server.Data;
 using MiniInstagram.Server.Data.Models;
-using MiniInstagram.Server.Infrastructure;
+using MiniInstagram.Server.Infrastructure.Extensions;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MiniInstagram.Server.Data;
 
-namespace MiniInstagram.Server.Infrastructure
+namespace MiniInstagram.Server.Infrastructure.Extensions
 {
-    public static class ApplicationBuilderExtentions
+    public static class ApplicationBuilderExtensions
     {
         public static void ApplyMigrations(this IApplicationBuilder app)
         {

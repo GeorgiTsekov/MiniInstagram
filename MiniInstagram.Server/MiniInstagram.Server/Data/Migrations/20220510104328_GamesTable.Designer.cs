@@ -12,7 +12,7 @@ using MiniInstagram.Server.Data;
 namespace MiniInstagram.Server.Data.Migrations
 {
     [DbContext(typeof(MiniInstagramDbContext))]
-    [Migration("20220510091455_GamesTable")]
+    [Migration("20220510104328_GamesTable")]
     partial class GamesTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -187,7 +187,7 @@ namespace MiniInstagram.Server.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Game");
+                    b.ToTable("Games");
                 });
 
             modelBuilder.Entity("MiniInstagram.Server.Data.Models.User", b =>

@@ -45,7 +45,7 @@ namespace MiniInstagram.Server.Data.Migrations
                 oldMaxLength: 128);
 
             migrationBuilder.CreateTable(
-                name: "Game",
+                name: "Games",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -57,9 +57,9 @@ namespace MiniInstagram.Server.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Game", x => x.Id);
+                    table.PrimaryKey("PK_Games", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Game_AspNetUsers_UserId",
+                        name: "FK_Games_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -67,15 +67,15 @@ namespace MiniInstagram.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Game_UserId",
-                table: "Game",
+                name: "IX_Games_UserId",
+                table: "Games",
                 column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Game");
+                name: "Games");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
