@@ -1,11 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MiniInstagram.Server.Models.Identity
+namespace MiniInstagram.Server.Features.Identity
 {
-    public class LoginRequestModel
+    public class RegisterUserRequestModel
     {
         [Required]
         public string UserName { get; set; }
+
+        [Required]
+        public string Email { get; set; }
 
         [Required]
         public string Password { get; set; }

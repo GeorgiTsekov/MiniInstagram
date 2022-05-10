@@ -11,7 +11,7 @@ namespace MiniInstagram.Server.Data
         {
         }
 
-        DbSet<Game> Games { get; set; }
+        public DbSet<Game> Games { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

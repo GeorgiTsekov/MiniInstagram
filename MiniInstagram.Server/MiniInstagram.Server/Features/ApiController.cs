@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MiniInstagram.Server.Controllers
+namespace MiniInstagram.Server.Features
 {
     [Route("[controller]")]
     [ApiController]

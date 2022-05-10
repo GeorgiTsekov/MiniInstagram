@@ -4,6 +4,11 @@ namespace MiniInstagram.Server.Data.Models
 {
     public class User : IdentityUser
     {
-        public IEnumerable<Game> Games { get; private set; } = new HashSet<Game>();
+        public User()
+        {
+            this.Games = new List<Game>();
+        }
+
+        public IEnumerable<Game> Games { get; private set; }
     }
 }

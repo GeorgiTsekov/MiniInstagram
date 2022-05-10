@@ -1,4 +1,4 @@
-﻿namespace MiniInstagram.Server.Helpers
+﻿namespace MiniInstagram.Server.Data
 {
     public class Validations
     {
