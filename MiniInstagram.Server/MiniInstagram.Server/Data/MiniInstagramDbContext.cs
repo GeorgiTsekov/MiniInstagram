@@ -10,5 +10,17 @@ namespace MiniInstagram.Server.Data
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder
+                .Entity<Game>()
+                .HasOne(g => g.User)
+                .WithMany(u => u.Games)
+                .HasForeignKey(g => g.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            base.OnModelCreating(builder);
+        }
     }
 }
