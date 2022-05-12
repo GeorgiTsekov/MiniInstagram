@@ -1,4 +1,5 @@
-﻿using MiniInstagram.Server.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MiniInstagram.Server.Data;
 using MiniInstagram.Server.Data.Models;
 
 namespace MiniInstagram.Server.Features.Games
@@ -26,6 +27,33 @@ namespace MiniInstagram.Server.Features.Games
             await this.db.SaveChangesAsync();
 
             return game.Id;
+        }
+
+        public async Task<IEnumerable<GameListResponseModel>> ByUser(string userId)
+        {
+            return await this.db
+                .Games
+                .Where(g => g.UserId == userId)
+                .Select(g => new GameListResponseModel
+                {
+                    Id = g.Id,
+                    Title = g.Title,
+                    ImageUrl = g.ImageUrl
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<GameListResponseModel>> All()
+        {
+            return await this.db
+                .Games
+                .Select(g => new GameListResponseModel
+                {
+                    Id = g.Id,
+                    Title = g.Title,
+                    ImageUrl = g.ImageUrl
+                })
+                .ToListAsync();
         }
     }
 }

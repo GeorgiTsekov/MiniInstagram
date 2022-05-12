@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MiniInstagram.Server.Data;
-using MiniInstagram.Server.Data.Models;
 using MiniInstagram.Server.Infrastructure.Extensions;
 
 namespace MiniInstagram.Server.Features.Games
@@ -17,6 +15,7 @@ namespace MiniInstagram.Server.Features.Games
 
         [Authorize]
         [HttpPost]
+        [Route(nameof(Create))]
         public async Task<ActionResult> Create(CreateGamesRequestModel model)
         {
             var userId = this.User.GetId();
@@ -24,6 +23,21 @@ namespace MiniInstagram.Server.Features.Games
             var gameId = await this.gameService.Create(model.Title, model.Description, model.ImageUrl, userId);
 
             return Created(nameof(this.Create), gameId);
+        }
+
+        [Authorize]
+        [Route(nameof(Mine))]
+        public async Task<IEnumerable<GameListResponseModel>> Mine()
+        {
+            var userId = this.User.GetId();
+
+            return await this.gameService.ByUser(userId);
+        }
+
+        [Route(nameof(All))]
+        public async Task<IEnumerable<GameListResponseModel>> All()
+        {
+            return await this.gameService.All();
         }
     }
 }
