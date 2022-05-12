@@ -21,7 +21,7 @@ namespace MiniInstagram.Server.Features.Games
         {
             var userId = this.User.GetId();
 
-            var gameId = this.gameService.Create(model.Title, model.Description, model.ImageUrl, userId);
+            var gameId = await this.gameService.Create(model.Title, model.Description, model.ImageUrl, userId);
 
             return Created(nameof(this.Create), gameId);
         }

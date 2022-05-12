@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using MiniInstagram.Server.Data;
 using MiniInstagram.Server.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +9,7 @@ services
     .AddIdentityEFStores()
     .AddJwtAuthentication(services.GetAppSettings(configuration))
     .AddApplicationServices()
+    .AddSwagger()
     .AddControllers();
 
 var app = builder.Build();
@@ -21,6 +20,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app
+    .UseSwaggerUI()
     .UseRouting()
     .UseCors(options => options
         .AllowAnyOrigin()

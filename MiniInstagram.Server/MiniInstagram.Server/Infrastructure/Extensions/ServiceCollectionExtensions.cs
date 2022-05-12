@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using MiniInstagram.Server.Data;
 using MiniInstagram.Server.Data.Models;
 using MiniInstagram.Server.Features.Games;
@@ -74,6 +75,22 @@ namespace MiniInstagram.Server.Infrastructure.Extensions
             return services
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<IGameService, GameService>();
+        }
+
+        public static IServiceCollection AddSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(g =>
+            {
+                g.SwaggerDoc(
+                    "v1", 
+                    new OpenApiInfo 
+                    {
+                        Title = "My MiniInstagram API",
+                        Version = "v1" 
+                    });
+            });
+
+            return services;
         }
     }
 }
