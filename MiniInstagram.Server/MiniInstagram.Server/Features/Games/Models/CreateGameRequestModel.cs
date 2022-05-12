@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static MiniInstagram.Server.Data.Validations.Game;
 
-namespace MiniInstagram.Server.Features.Games
+namespace MiniInstagram.Server.Features.Games.Models
 {
-    public class CreateGamesRequestModel
+    public class CreateGameRequestModel
     {
         [Required]
         [MaxLength(MAX_TITLE_LENGTH)]

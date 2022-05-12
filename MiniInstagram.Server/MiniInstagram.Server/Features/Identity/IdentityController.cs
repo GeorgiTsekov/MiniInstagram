@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MiniInstagram.Server.Data.Models;
+using MiniInstagram.Server.Features.Identity.Models;
 
 namespace MiniInstagram.Server.Features.Identity
 {

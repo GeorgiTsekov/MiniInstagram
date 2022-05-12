@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MiniInstagram.Server.Data;
 using MiniInstagram.Server.Data.Models;
+using MiniInstagram.Server.Features.Games.Models;
 
 namespace MiniInstagram.Server.Features.Games
 {
@@ -29,12 +30,12 @@ namespace MiniInstagram.Server.Features.Games
             return game.Id;
         }
 
-        public async Task<IEnumerable<GameListResponseModel>> ByUser(string userId)
+        public async Task<IEnumerable<GameListServiceModel>> ByUser(string userId)
         {
             return await this.db
                 .Games
                 .Where(g => g.UserId == userId)
-                .Select(g => new GameListResponseModel
+                .Select(g => new GameListServiceModel
                 {
                     Id = g.Id,
                     Title = g.Title,
@@ -43,17 +44,35 @@ namespace MiniInstagram.Server.Features.Games
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<GameListResponseModel>> All()
+        public async Task<IEnumerable<GameListServiceModel>> All()
         {
             return await this.db
                 .Games
-                .Select(g => new GameListResponseModel
+                .Select(g => new GameListServiceModel
                 {
                     Id = g.Id,
                     Title = g.Title,
                     ImageUrl = g.ImageUrl
                 })
                 .ToListAsync();
+        }
+
+        public async Task<GameDetailsServiceModel> GetOne(int gameId)
+        {
+            var game = await this.db.Games
+                .Where(g => g.Id == gameId)
+                .Select(g => new GameDetailsServiceModel
+                {
+                    Id = g.Id,
+                    Title = g.Title,
+                    Description = g.Description,
+                    UserId = g.UserId,
+                    UserName = g.User.UserName,
+                    ImageUrl = g.ImageUrl
+
+                }).FirstOrDefaultAsync();
+
+            return game;
         }
     }
 }

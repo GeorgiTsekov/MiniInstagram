@@ -1,6 +1,6 @@
-﻿namespace MiniInstagram.Server.Features.Games
+﻿namespace MiniInstagram.Server.Features.Games.Models
 {
-    public class GameListResponseModel
+    public class GameListServiceModel
     {
         public int Id { get; set; }
 

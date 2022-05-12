@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MiniInstagram.Server.Features.Identity
+namespace MiniInstagram.Server.Features.Identity.Models
 {
     public class RegisterUserRequestModel
     {

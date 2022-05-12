@@ -7,6 +7,7 @@ using MiniInstagram.Server.Data;
 using MiniInstagram.Server.Data.Models;
 using MiniInstagram.Server.Features.Games;
 using MiniInstagram.Server.Features.Identity;
+using MiniInstagram.Server.Infrastructure.Filters;
 using System.Text;
 
 namespace MiniInstagram.Server.Infrastructure.Extensions
@@ -91,6 +92,11 @@ namespace MiniInstagram.Server.Infrastructure.Extensions
             });
 
             return services;
+        }
+
+        public static void AddApiControllers(this IServiceCollection services)
+        {
+            services.AddControllers(options => options.Filters.Add<ModelOrNotFoundFilter>());
         }
     }
 }
