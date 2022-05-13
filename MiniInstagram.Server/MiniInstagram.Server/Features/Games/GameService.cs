@@ -59,7 +59,8 @@ namespace MiniInstagram.Server.Features.Games
 
         public async Task<GameDetailsServiceModel> GetOne(int gameId)
         {
-            var game = await this.db.Games
+            var game = await this.db
+                .Games
                 .Where(g => g.Id == gameId)
                 .Select(g => new GameDetailsServiceModel
                 {
@@ -73,6 +74,24 @@ namespace MiniInstagram.Server.Features.Games
                 }).FirstOrDefaultAsync();
 
             return game;
+        }
+
+        public  async Task<bool> Update(int gameId, string title, string description, string imageUrl, string userId)
+        {
+            var game = await this.db.Games.FirstOrDefaultAsync(g => g.Id == gameId && g.UserId == userId);
+
+            if (game == null)
+            {
+                return false;
+            }
+
+            game.Title = title;
+            game.Description = description;
+            game.ImageUrl = imageUrl;
+
+            await this.db.SaveChangesAsync();
+
+            return true;
         }
     }
 }

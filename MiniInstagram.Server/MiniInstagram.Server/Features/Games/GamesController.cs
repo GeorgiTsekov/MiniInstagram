@@ -21,14 +21,22 @@ namespace MiniInstagram.Server.Features.Games
         {
             var userId = this.User.GetId();
 
-            return await this.gameService.ByUser(userId);
+            var games = await this.gameService.ByUser(userId);
+
+            return games;
         }
 
         [Route("{id}")]
         [HttpGet]
         public async Task<ActionResult<GameDetailsServiceModel>> GetOne(int id)
         {
-            return await this.gameService.GetOne(id);
+            var game = await this.gameService.GetOne(id);
+            if (game == null)
+            {
+                return BadRequest();
+            }
+
+            return game;
         }
 
         [Route(nameof(All))]
@@ -48,6 +56,23 @@ namespace MiniInstagram.Server.Features.Games
             var gameId = await this.gameService.Create(model.Title, model.Description, model.ImageUrl, userId);
 
             return Created(nameof(this.Create), gameId);
+        }
+
+        [Authorize]
+        [HttpPut]
+        [Route(nameof(Edit))]
+        public async Task<ActionResult> Edit(UpdateGameRequestModel model)
+        {
+            var userId = this.User.GetId();
+
+            var isUpdated = await this.gameService.Update(model.Id, model.Title, model.Description, model.ImageUrl, userId);
+
+            if (!isUpdated)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
     }
 }
