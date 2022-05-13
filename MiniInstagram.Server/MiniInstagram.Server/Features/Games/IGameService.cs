@@ -12,7 +12,9 @@ namespace MiniInstagram.Server.Features.Games
 
         public Task<GameDetailsServiceModel> GetOne(int gameId);
 
-        public Task<bool> Update(int id, string title, string description, string imageUrl, string userId);
+        public Task<bool> Update(int gameId, string title, string description, string imageUrl, string userId);
+
+        public Task<bool> Delete(int gameId, string userId);
 
     }
 }

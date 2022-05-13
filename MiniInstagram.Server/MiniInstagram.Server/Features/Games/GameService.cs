@@ -78,7 +78,7 @@ namespace MiniInstagram.Server.Features.Games
 
         public  async Task<bool> Update(int gameId, string title, string description, string imageUrl, string userId)
         {
-            var game = await this.db.Games.FirstOrDefaultAsync(g => g.Id == gameId && g.UserId == userId);
+            var game = await this.GetGameByIdAndByUserId(gameId, userId);
 
             if (game == null)
             {
@@ -92,6 +92,27 @@ namespace MiniInstagram.Server.Features.Games
             await this.db.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<bool> Delete(int gameId, string userId)
+        {
+            var game = await GetGameByIdAndByUserId(gameId, userId);
+
+            if (game == null)
+            {
+                return false;
+            }
+
+            this.db.Games.Remove(game);
+
+            await this.db.SaveChangesAsync();
+
+            return true;
+        }
+
+        private async Task<Game> GetGameByIdAndByUserId(int gameId, string userId)
+        {
+            return await this.db.Games.FirstOrDefaultAsync(g => g.Id == gameId && g.UserId == userId);
         }
     }
 }

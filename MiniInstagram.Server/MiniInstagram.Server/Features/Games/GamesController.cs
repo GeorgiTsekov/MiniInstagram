@@ -74,5 +74,22 @@ namespace MiniInstagram.Server.Features.Games
 
             return Ok();
         }
+
+        [Authorize]
+        [HttpDelete]
+        [Route(nameof(Delete))]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var userId = this.User.GetId();
+
+            var isDeleted = await this.gameService.Delete(id, userId);
+
+            if (!isDeleted)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
     }
 }
