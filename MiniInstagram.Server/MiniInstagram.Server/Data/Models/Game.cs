@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MiniInstagram.Server.Data.Models.Base;
+using System.ComponentModel.DataAnnotations;
 using static MiniInstagram.Server.Data.Validations.Game;
 
 namespace MiniInstagram.Server.Data.Models
 {
-    public class Game
+    public class Game : DeletableEntity
     {
         public int Id { get; set; }
 

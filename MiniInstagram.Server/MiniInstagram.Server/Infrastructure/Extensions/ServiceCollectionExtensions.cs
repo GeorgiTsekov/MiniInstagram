@@ -8,6 +8,7 @@ using MiniInstagram.Server.Data.Models;
 using MiniInstagram.Server.Features.Games;
 using MiniInstagram.Server.Features.Identity;
 using MiniInstagram.Server.Infrastructure.Filters;
+using MiniInstagram.Server.Infrastructure.Services;
 using System.Text;
 
 namespace MiniInstagram.Server.Infrastructure.Extensions
@@ -75,6 +76,7 @@ namespace MiniInstagram.Server.Infrastructure.Extensions
         {
             return services
                 .AddTransient<IIdentityService, IdentityService>()
+                .AddScoped<ICurrentUserService, CurrentUserService>()
                 .AddTransient<IGameService, GameService>();
         }
 
