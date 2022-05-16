@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-MiniInstagram.Server-86C6F0A3-79CE-4359-9C62-191282F7D33C</UserSecretsId>
   </PropertyGroup>
