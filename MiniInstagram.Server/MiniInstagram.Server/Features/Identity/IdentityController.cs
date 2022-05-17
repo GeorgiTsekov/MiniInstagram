@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using MiniInstagram.Server.Data;
 using MiniInstagram.Server.Data.Models;
 using MiniInstagram.Server.Features.Identity.Models;
+using MiniInstagram.Server.Infrastructure.Services;
 
 namespace MiniInstagram.Server.Features.Identity
 {
@@ -10,22 +13,39 @@ namespace MiniInstagram.Server.Features.Identity
     {
         private readonly UserManager<User> userManager;
         private readonly IIdentityService identityService;
+        private readonly ICurrentUserService currentUserService;
         private readonly AppSettings appSettings;
 
         public IdentityController(
             UserManager<User> userManager,
             IIdentityService identityService,
-            IOptions<AppSettings> appSettings)
+            IOptions<AppSettings> appSettings,
+            ICurrentUserService currentUserService)
         {
             this.userManager = userManager;
             this.identityService = identityService;
+            this.currentUserService = currentUserService;
             this.appSettings = appSettings.Value;
+        }
+
+        [HttpGet]
+        [Route(nameof(MyProfile))]
+        [Authorize]
+        public async Task<ActionResult<ProfileServiceModel>> MyProfile()
+        {
+            var userId = currentUserService.GetId();
+            return await this.identityService.GetOne(userId);
         }
 
         [HttpPost]
         [Route(nameof(Register))]
         public async Task<ActionResult> Register(RegisterUserRequestModel model)
         {
+            if (this.identityService.IsEmailDublicated(model.Email))
+            {
+                return BadRequest($"Email: {model.Email} is allready exist");
+            }
+
             var user = new User 
             { 
                 Email = model.Email,

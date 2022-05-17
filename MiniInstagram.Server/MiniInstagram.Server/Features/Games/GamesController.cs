@@ -19,9 +19,9 @@ namespace MiniInstagram.Server.Features.Games
         }
 
         [Authorize]
-        [Route(nameof(Mine))]
+        [Route(nameof(MyGames))]
         [HttpGet]
-        public async Task<IEnumerable<GameListServiceModel>> Mine()
+        public async Task<IEnumerable<GameListServiceModel>> MyGames()
         {
             var userId = this.currentUserService.GetId();
 
