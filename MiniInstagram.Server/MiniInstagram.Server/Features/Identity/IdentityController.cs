@@ -46,7 +46,7 @@ namespace MiniInstagram.Server.Features.Identity
         [Route(nameof(Login))]
         public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel model)
         {
-            var user = await this.userManager.FindByNameAsync(model.UserName);
+            var user = await this.userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 return Unauthorized();
