@@ -53,7 +53,7 @@ namespace MiniInstagram.Server.Features.Games
         [Authorize]
         [HttpPost]
         [Route(nameof(Create))]
-        public async Task<ActionResult> Create(CreateGameRequestModel model)
+        public async Task<ActionResult> Create(CreateUpdateGameRequestModel model)
         {
             var userId = this.currentUserService.GetId();
 
@@ -64,12 +64,12 @@ namespace MiniInstagram.Server.Features.Games
 
         [Authorize]
         [HttpPut]
-        [Route(nameof(Edit))]
-        public async Task<ActionResult> Edit(UpdateGameRequestModel model)
+        [Route($"id/{nameof(Edit)}")]
+        public async Task<ActionResult> Edit(int id, CreateUpdateGameRequestModel model)
         {
             var userId = this.currentUserService.GetId();
 
-            var isUpdated = await this.gameService.Update(model.Id, model.Title, model.Description, model.ImageUrl, userId);
+            var isUpdated = await this.gameService.Update(id, model.Title, model.Description, model.ImageUrl, userId);
 
             if (!isUpdated)
             {
@@ -81,7 +81,7 @@ namespace MiniInstagram.Server.Features.Games
 
         [Authorize]
         [HttpDelete]
-        [Route(nameof(Delete))]
+        [Route($"id/{nameof(Delete)}")]
         public async Task<ActionResult> Delete(int id)
         {
             var userId = this.currentUserService.GetId();

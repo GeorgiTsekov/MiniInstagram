@@ -3,7 +3,7 @@ using static MiniInstagram.Server.Data.Validations.Game;
 
 namespace MiniInstagram.Server.Features.Games.Models
 {
-    public class CreateGameRequestModel
+    public class CreateUpdateGameRequestModel
     {
         [Required]
         [MaxLength(MAX_TITLE_LENGTH)]

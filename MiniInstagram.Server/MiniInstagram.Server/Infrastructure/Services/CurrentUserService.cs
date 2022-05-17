@@ -21,7 +21,7 @@ namespace MiniInstagram.Server.Infrastructure.Services
 
         public string GetUserName()
         {
-            var userName = this.user?.Identity?.Name;
+            var userName = this.user?.GetUserName();
 
             return userName;
         }

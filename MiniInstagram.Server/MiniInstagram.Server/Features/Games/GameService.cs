@@ -73,7 +73,8 @@ namespace MiniInstagram.Server.Features.Games
                     UserName = g.User.UserName,
                     ImageUrl = g.ImageUrl
 
-                }).FirstOrDefaultAsync();
+                })
+                .FirstOrDefaultAsync();
 
             return game;
         }
