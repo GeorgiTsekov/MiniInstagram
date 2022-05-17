@@ -6,7 +6,7 @@ namespace MiniInstagram.Server.Features.Games
     {
         Task<int> Create(string title, string description, string imageUrl, string userId);
 
-        Task<IEnumerable<GameListServiceModel>> ByUser(string userId);
+        Task<IEnumerable<GameListServiceModel>> AllByUserId(string userId);
 
         Task<IEnumerable<GameListServiceModel>> All();
 

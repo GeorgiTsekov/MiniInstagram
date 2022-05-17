@@ -25,7 +25,7 @@ namespace MiniInstagram.Server.Features.Games
         {
             var userId = this.currentUserService.GetId();
 
-            var games = await this.gameService.ByUser(userId);
+            var games = await this.gameService.AllByUserId(userId);
 
             return games;
         }

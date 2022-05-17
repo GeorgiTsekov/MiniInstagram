@@ -30,10 +30,11 @@ namespace MiniInstagram.Server.Features.Games
             return game.Id;
         }
 
-        public async Task<IEnumerable<GameListServiceModel>> ByUser(string userId)
+        public async Task<IEnumerable<GameListServiceModel>> AllByUserId(string userId)
         {
             return await this.db
                 .Games
+                .OrderByDescending(g => g.CreatedOn)
                 .Where(g => g.UserId == userId)
                 .Select(g => new GameListServiceModel
                 {
@@ -48,6 +49,7 @@ namespace MiniInstagram.Server.Features.Games
         {
             return await this.db
                 .Games
+                .OrderByDescending(g => g.CreatedOn)
                 .Select(g => new GameListServiceModel
                 {
                     Id = g.Id,
