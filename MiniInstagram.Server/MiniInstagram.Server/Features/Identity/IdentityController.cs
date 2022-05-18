@@ -37,6 +37,28 @@ namespace MiniInstagram.Server.Features.Identity
             return await this.identityService.GetOne(userId);
         }
 
+        [Authorize]
+        [HttpPut]
+        public async Task<ActionResult> Edit(UpdateProfileRequestModel model)
+        {
+            var userId = currentUserService.GetId();
+
+            var updated = await this.identityService.Update(
+                userId, 
+                model.ProfileUrl, 
+                model.Gender, 
+                model.WebSite, 
+                model.Biography, 
+                model.IsPrivate);
+
+            if (!updated)
+            {
+                return BadRequest("Not");
+            }
+
+            return Ok("Yes");
+        }
+
         [HttpPost]
         [Route(nameof(Register))]
         public async Task<ActionResult> Register(RegisterUserRequestModel model)

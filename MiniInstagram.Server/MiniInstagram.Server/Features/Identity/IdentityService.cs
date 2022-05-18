@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MiniInstagram.Server.Data;
+using MiniInstagram.Server.Data.Models.Base;
 using MiniInstagram.Server.Features.Identity.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -60,6 +61,34 @@ namespace MiniInstagram.Server.Features.Identity
         public bool IsEmailDublicated(string email)
         {
             return this.db.Users.Any(u => u.Email == email);
+        }
+
+        public async Task<bool> Update(
+            string userId, 
+            string profileUrl, 
+            Gender gender, 
+            string webSite, 
+            string biography, 
+            bool isPrivate)
+        {
+            var user = await this.db
+                .Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            user.ProfileUrl = profileUrl;
+            user.Gender = gender;
+            user.WebSite = webSite;
+            user.Biography = biography;
+            user.IsPrivate = isPrivate;
+
+            await this.db.SaveChangesAsync();
+
+            return true;
         }
     }
 }

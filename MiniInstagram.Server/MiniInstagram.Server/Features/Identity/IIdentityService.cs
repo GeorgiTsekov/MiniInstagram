@@ -1,4 +1,5 @@
-﻿using MiniInstagram.Server.Features.Identity.Models;
+﻿using MiniInstagram.Server.Data.Models.Base;
+using MiniInstagram.Server.Features.Identity.Models;
 
 namespace MiniInstagram.Server.Features.Identity
 {
@@ -9,5 +10,13 @@ namespace MiniInstagram.Server.Features.Identity
         bool IsEmailDublicated(string email);
 
         Task<ProfileServiceModel> GetOne(string userId);
+
+        Task<bool> Update(
+            string userId, 
+            string profileUrl, 
+            Gender gender, 
+            string webSite, 
+            string biography, 
+            bool isPrivate);
     }
 }
