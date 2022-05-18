@@ -1,4 +1,5 @@
 ﻿using MiniInstagram.Server.Features.Games.Models;
+using MiniInstagram.Server.Infrastructure.Services;
 
 namespace MiniInstagram.Server.Features.Games
 {
@@ -12,9 +13,9 @@ namespace MiniInstagram.Server.Features.Games
 
         Task<GameDetailsServiceModel> GetOne(int gameId);
 
-        Task<bool> Update(int gameId, string title, string description, string imageUrl, string userId);
+        Task<Result> Update(int gameId, string title, string description, string imageUrl, string userId);
 
-        Task<bool> Delete(int gameId, string userId);
+        Task<Result> Delete(int gameId, string userId);
 
     }
 }

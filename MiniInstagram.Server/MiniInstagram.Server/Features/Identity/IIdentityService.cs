@@ -1,5 +1,6 @@
 ﻿using MiniInstagram.Server.Data.Models.Base;
 using MiniInstagram.Server.Features.Identity.Models;
+using MiniInstagram.Server.Infrastructure.Services;
 
 namespace MiniInstagram.Server.Features.Identity
 {
@@ -7,11 +8,11 @@ namespace MiniInstagram.Server.Features.Identity
     {
         string GenerateJwtToken(string userId, string userName, string secret);
 
-        bool IsEmailDublicated(string email);
+        Task<Result> IsEmailUnique(string email);
 
         Task<ProfileServiceModel> GetOne(string userId);
 
-        Task<bool> Update(
+        Task<Result> Update(
             string userId, 
             string profileUrl, 
             Gender gender, 

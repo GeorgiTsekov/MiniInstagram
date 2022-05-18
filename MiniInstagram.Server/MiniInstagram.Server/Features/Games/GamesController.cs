@@ -69,11 +69,11 @@ namespace MiniInstagram.Server.Features.Games
         {
             var userId = this.currentUserService.GetId();
 
-            var isUpdated = await this.gameService.Update(id, model.Title, model.Description, model.ImageUrl, userId);
+            var updated = await this.gameService.Update(id, model.Title, model.Description, model.ImageUrl, userId);
 
-            if (!isUpdated)
+            if (updated.Failure)
             {
-                return BadRequest();
+                return BadRequest(updated.Error);
             }
 
             return Ok();
@@ -86,11 +86,11 @@ namespace MiniInstagram.Server.Features.Games
         {
             var userId = this.currentUserService.GetId();
 
-            var isDeleted = await this.gameService.Delete(id, userId);
+            var deleted = await this.gameService.Delete(id, userId);
 
-            if (!isDeleted)
+            if (deleted.Failure)
             {
-                return BadRequest();
+                return BadRequest(deleted.Error);
             }
 
             return Ok();

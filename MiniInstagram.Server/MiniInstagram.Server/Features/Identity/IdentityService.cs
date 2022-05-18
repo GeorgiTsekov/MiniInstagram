@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MiniInstagram.Server.Data;
+using MiniInstagram.Server.Data.Models;
 using MiniInstagram.Server.Data.Models.Base;
 using MiniInstagram.Server.Features.Identity.Models;
+using MiniInstagram.Server.Infrastructure.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -58,12 +60,18 @@ namespace MiniInstagram.Server.Features.Identity
             return profile;
         }
 
-        public bool IsEmailDublicated(string email)
+        public async Task<Result> IsEmailUnique(string email)
         {
-            return this.db.Users.Any(u => u.Email == email);
+            var user = await this.db.Users.AnyAsync(u => u.Email == email);
+            if (user)
+            {
+                return $"Email: {email} is dublicated";
+            }
+
+            return true;
         }
 
-        public async Task<bool> Update(
+        public async Task<Result> Update(
             string userId, 
             string profileUrl, 
             Gender gender, 
@@ -77,18 +85,42 @@ namespace MiniInstagram.Server.Features.Identity
 
             if (user == null)
             {
-                return false;
+                return "You are not authorized to update this user";
             }
 
-            user.ProfileUrl = profileUrl;
-            user.Gender = gender;
-            user.WebSite = webSite;
-            user.Biography = biography;
-            user.IsPrivate = isPrivate;
+            this.ChangeUserProfile(profileUrl, gender, webSite, biography, isPrivate, user);
 
             await this.db.SaveChangesAsync();
 
             return true;
+        }
+
+        private void ChangeUserProfile(string profileUrl, Gender gender, string webSite, string biography, bool isPrivate, User user)
+        {
+            if (user.ProfileUrl != profileUrl)
+            {
+                user.ProfileUrl = profileUrl;
+            }
+
+            if (user.Gender != gender)
+            {
+                user.Gender = gender;
+            }
+
+            if (user.WebSite != webSite)
+            {
+                user.WebSite = webSite;
+            }
+
+            if (user.Biography != biography)
+            {
+                user.Biography = biography;
+            }
+
+            if (user.IsPrivate != isPrivate)
+            {
+                user.IsPrivate = isPrivate;
+            }
         }
     }
 }

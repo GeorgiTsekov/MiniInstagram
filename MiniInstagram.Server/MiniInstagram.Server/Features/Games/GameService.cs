@@ -2,6 +2,7 @@
 using MiniInstagram.Server.Data;
 using MiniInstagram.Server.Data.Models;
 using MiniInstagram.Server.Features.Games.Models;
+using MiniInstagram.Server.Infrastructure.Services;
 
 namespace MiniInstagram.Server.Features.Games
 {
@@ -79,13 +80,13 @@ namespace MiniInstagram.Server.Features.Games
             return game;
         }
 
-        public  async Task<bool> Update(int gameId, string title, string description, string imageUrl, string userId)
+        public  async Task<Result> Update(int gameId, string title, string description, string imageUrl, string userId)
         {
             var game = await this.GetGameByIdAndByUserId(gameId, userId);
 
             if (game == null)
             {
-                return false;
+                return "You are not authorized to update this game, or game doesn't exist already";
             }
 
             game.Title = title;
@@ -97,13 +98,13 @@ namespace MiniInstagram.Server.Features.Games
             return true;
         }
 
-        public async Task<bool> Delete(int gameId, string userId)
+        public async Task<Result> Delete(int gameId, string userId)
         {
             var game = await GetGameByIdAndByUserId(gameId, userId);
 
             if (game == null)
             {
-                return false;
+                return "You are not authorized to delete this game, or game doesn't exist already";
             }
 
             this.db.Games.Remove(game);

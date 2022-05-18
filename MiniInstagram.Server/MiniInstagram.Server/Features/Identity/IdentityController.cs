@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using MiniInstagram.Server.Data;
 using MiniInstagram.Server.Data.Models;
 using MiniInstagram.Server.Features.Identity.Models;
 using MiniInstagram.Server.Infrastructure.Services;
@@ -39,6 +38,7 @@ namespace MiniInstagram.Server.Features.Identity
 
         [Authorize]
         [HttpPut]
+        [Route(nameof(Edit))]
         public async Task<ActionResult> Edit(UpdateProfileRequestModel model)
         {
             var userId = currentUserService.GetId();
@@ -51,21 +51,23 @@ namespace MiniInstagram.Server.Features.Identity
                 model.Biography, 
                 model.IsPrivate);
 
-            if (!updated)
+            if (updated.Failure)
             {
-                return BadRequest("Not");
+                return BadRequest(updated.Error);
             }
 
-            return Ok("Yes");
+            return Ok();
         }
 
         [HttpPost]
         [Route(nameof(Register))]
         public async Task<ActionResult> Register(RegisterUserRequestModel model)
         {
-            if (this.identityService.IsEmailDublicated(model.Email))
+            var usedEmail = await this.identityService.IsEmailUnique(model.Email);
+
+            if (usedEmail.Failure)
             {
-                return BadRequest($"Email: {model.Email} is allready exist");
+                return BadRequest(usedEmail.Error);
             }
 
             var user = new User 
@@ -76,12 +78,12 @@ namespace MiniInstagram.Server.Features.Identity
 
             var result = await this.userManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                return Ok();
+                return BadRequest(result.Errors);
             }
 
-            return BadRequest(result.Errors);
+            return Ok();
         }
 
         [HttpPost]
