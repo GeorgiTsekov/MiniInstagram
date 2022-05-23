@@ -17,5 +17,6 @@ namespace MiniInstagram.Server.Features.Games
 
         Task<Result> Delete(int gameId, string userId);
 
+        Task<IEnumerable<GameListServiceModel>> SearchByTitle(string query);
     }
 }

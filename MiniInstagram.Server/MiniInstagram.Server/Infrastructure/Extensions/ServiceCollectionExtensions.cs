@@ -96,9 +96,10 @@ namespace MiniInstagram.Server.Infrastructure.Extensions
             return services;
         }
 
-        public static void AddApiControllers(this IServiceCollection services)
-        {
-            services.AddControllers(options => options.Filters.Add<ModelOrNotFoundFilter>());
-        }
+        // TODO use this functionality later
+        //public static void AddApiControllers(this IServiceCollection services)
+        //{
+        //    services.AddControllers(options => options.Filters.Add<ModelOrNotFoundFilter>());
+        //}
     }
 }

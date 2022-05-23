@@ -20,6 +20,20 @@ namespace MiniInstagram.Server.Features.Identity
             this.db = db;
         }
 
+        public async Task<IEnumerable<SearchUsersServiceModel>> SearchByUserName(string query)
+        {
+            return await this.db
+                .Users
+                .Where(u => u.UserName.ToLower().Contains(query.ToLower()))
+                .Select(u => new SearchUsersServiceModel
+                {
+                    UserName = u.UserName,
+                    ProfileUrl = u.ProfileUrl,
+                    UserId = u.Id,
+                })
+                .ToListAsync();
+        }
+
         public string GenerateJwtToken(string userId, string email, string secret)
         {
             var tokenHandler = new JwtSecurityTokenHandler();

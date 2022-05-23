@@ -118,5 +118,18 @@ namespace MiniInstagram.Server.Features.Games
         {
             return await this.db.Games.FirstOrDefaultAsync(g => g.Id == gameId && g.UserId == userId);
         }
+
+        public async Task<IEnumerable<GameListServiceModel>> SearchByTitle(string query)
+        {
+            return await this.db.Games
+                .Where(x => x.Title.Contains(query))
+                .Select(g => new GameListServiceModel
+                {
+                    Id = g.Id,
+                    Title = g.Title,
+                    ImageUrl = g.ImageUrl,
+                })
+                .ToListAsync();
+        }
     }
 }

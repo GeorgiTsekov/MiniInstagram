@@ -36,6 +36,13 @@ namespace MiniInstagram.Server.Features.Identity
             return await this.identityService.GetOne(userId);
         }
 
+        [HttpGet]
+        [Route(nameof(Search))]
+        public async Task<IEnumerable<SearchUsersServiceModel>> Search(string searchTerm)
+        {
+            return await this.identityService.SearchByUserName(searchTerm);
+        }
+
         [Authorize]
         [HttpPut]
         [Route(nameof(Edit))]

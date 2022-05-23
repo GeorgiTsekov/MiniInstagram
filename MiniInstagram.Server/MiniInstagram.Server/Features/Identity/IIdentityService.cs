@@ -19,5 +19,7 @@ namespace MiniInstagram.Server.Features.Identity
             string webSite, 
             string biography, 
             bool isPrivate);
+
+        Task<IEnumerable<SearchUsersServiceModel>> SearchByUserName(string query);
     }
 }

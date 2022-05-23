@@ -50,6 +50,13 @@ namespace MiniInstagram.Server.Features.Games
             return await this.gameService.All();
         }
 
+        [HttpGet]
+        [Route(nameof(Search))]
+        public async Task<IEnumerable<GameListServiceModel>> Search(string searchTerm)
+        {
+            return await this.gameService.SearchByTitle(searchTerm);
+        }
+
         [Authorize]
         [HttpPost]
         [Route(nameof(Create))]
